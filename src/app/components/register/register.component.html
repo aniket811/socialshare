@@ -2,26 +2,33 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <div class="card px-5 py-5" id="form1">
-                <form method="post" class="form-group" #LoginUser="ngForm" (ngSubmit)="getUserLogin(LoginUser.value)">
+                <form method="post" class="form-group">
                     <div class="d-flex justify-content-center align-items-center">
-                        <h2>Login </h2>
+                        <h2>Create an Account</h2>
                     </div>
                     <div class="form-data">
                         <div class="forms-inputs mb-4"> <span>Email</span> <input type="text"
                                 class="form-control">
 
                         </div>
+                        <div class="forms-inputs mb-4"> <span>Username</span> <input type="text"
+                            class="form-control">
+                        </div>
+
                         <div class="forms-inputs mb-4"> <span>Password</span> <input type="password"
                                 class="form-control">
 
                         </div>
+                        <div class="forms-inputs mb-4"> <span>Confirm Password</span> <input type="text"
+                            class="form-control">
+                        </div>
                         <div class="mb-3">
-                            <button class="btn btn-dark w-100" >Login</button>
+                            <button class="btn btn-dark w-100" >Register</button>
                         </div>
                     </div>
-                    <div class="form-footer"> <a href="#">Forgot password?</a> 
-                        <button class="btn btn-sm btn-outline-primary w-100" (click)="onRegisterClick()">
-                            Sign up
+                    <div class="form-footer">  
+                        <button class="btn btn-sm btn-outline-primary w-100" (click)="onLoginClick()">
+                            Alredy have an account? Login
                         </button> 
                     </div>
                 </form>

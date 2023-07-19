@@ -1,6 +1,7 @@
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+// import {FirebaseTs} from "firebasets/firebasets"
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationComponent } from '../app/components/authentication/authentication.component';
@@ -9,7 +10,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PostsComponent } from './components/dashboard/posts/posts.component';
 import { HomeComponent } from './components/home/home.component';
-import {MatButtonModule} from '@angular/material/button';
+import { RegisterComponent } from './components/register/register.component';
+import { FormsModule } from '@angular/forms';
+import {FirebaseTSApp} from "firebasets/firebasetsApp/firebaseTSApp"
+ import {FirebaseTSAuth} from "firebasets/firebasetsAuth/firebaseTSAuth"
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+// import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,15 +24,23 @@ import {MatButtonModule} from '@angular/material/button';
     NavbarComponent,
     DashboardComponent,
     PostsComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [FirebaseTSApp.init(environment.firebaseConfig),FirebaseTSAuth],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(){
+    AngularFireModule.initializeApp(environment.firebaseConfig)
+  }
+
+}
