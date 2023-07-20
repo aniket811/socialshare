@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterComponent {
     @ViewChild('RegisterUser') RegisterUser:any;
+    isRegistering:boolean=false;
     isFormValid():boolean{
       if(this.RegisterUser.valid){
         return false;
@@ -24,23 +25,24 @@ export class RegisterComponent {
     this.toast.error(message,"Error");
   }
   getUserRegistered(event:any) {
-    console.log(event);
+    this.isRegistering=true;
     if(event.password.trim().length<0||event.password.trim().length<0){
       this.toast.error("Required Field is Missiog","Error");
       return;
     }
-
     //(event);
     this.auth.createAccountWith({
       email:event.email,
       password:event.password,
       onComplete:(user:any)=>{
         this.auth.sendVerificationEmail();
+        this.isRegistering=false;
         this.toast.success("Email verification link has been sent to your Email address","Success");
         this.router.navigate(['/login']);
-
+        
       },
       onFail:(error:any)=>{
+        this.isRegistering=false;
         this.toast.error(error,"Error");
       }
     })

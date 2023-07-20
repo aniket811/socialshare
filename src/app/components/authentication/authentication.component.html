@@ -28,11 +28,21 @@
 
                         <div >
 
-                            <button class="btn btn-dark w-100"type="submit" >Login</button>
+                            <button class="btn btn-dark w-100"type="submit" [disabled]="isLoading">
+                             <span *ngIf="isLoading">
+                                Please wait...
+                             </span>
+                                <span *ngIf="!isLoading">
+                                    Login
+                                </span>
+                            </button>
                         </div>
 
                     </div>
-                    <div class="form-footer"> <a href="#">Forgot password?</a>
+                    <div class="form-footer mt-1 mb-2"> 
+                        <a  (click)="forgotPasswordEmailSend()">
+                            Forgot password?
+                        </a>
                         <button class="btn btn-sm btn-outline-primary w-100" (click)="onRegisterClick()">
                             Sign up
                         </button>

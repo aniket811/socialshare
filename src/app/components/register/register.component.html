@@ -42,7 +42,15 @@
                             </div>
                             <!-- <div *ngIf="RegisterUser.valid"> -->
                             <button
-                                class="btn btn-dark w-100" type="submit" [disabled]="RegisterUser.controls['email'].errors?.['required']||RegisterUser.controls['password'].value!=RegisterUser.controls['confirmPassword'].value||RegisterUser.controls['password'].errors?.['minlength']">Register</button>
+                                class="btn btn-dark w-100" type="submit" [disabled]="RegisterUser.controls['email'].errors?.['required']||RegisterUser.controls['password'].value!=RegisterUser.controls['confirmPassword'].value||RegisterUser.controls['password'].errors?.['minlength']||isRegistering">
+                                <span *ngIf="!isRegistering">
+
+                                    Register
+                                </span>
+                                <span *ngIf="isRegistering">
+                                    Please wait...
+                                </span>
+                            </button>
                             <!-- </div> -->
                         </div>
                     </div>
