@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -7,8 +9,42 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private router:Router) {}
+    @ViewChild('RegisterUser') RegisterUser:any;
+    isFormValid():boolean{
+      if(this.RegisterUser.valid){
+        return false;
+      }
+      return false;
+    }
+  constructor(private router:Router,private auth:FirebaseTSAuth,private toast:ToastrService) {}
   onLoginClick() {
     this.router.navigate(['/login']);
   }
+  public getErrorMessage(message:any){
+    this.toast.error(message,"Error");
+  }
+  getUserRegistered(event:any) {
+    console.log(event);
+    if(event.password.trim().length<0||event.password.trim().length<0){
+      this.toast.error("Required Field is Missiog","Error");
+      return;
+    }
+
+    //(event);
+    this.auth.createAccountWith({
+      email:event.email,
+      password:event.password,
+      onComplete:(user:any)=>{
+        this.auth.sendVerificationEmail();
+        this.toast.success("Email verification link has been sent to your Email address","Success");
+        this.router.navigate(['/login']);
+
+      },
+      onFail:(error:any)=>{
+        this.toast.error(error,"Error");
+      }
+    })
+  
+  }
+  
 }

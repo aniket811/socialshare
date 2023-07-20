@@ -2,34 +2,54 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <div class="card px-5 py-5" id="form1">
-                <form method="post" class="form-group">
+                <form method="post" class="form-group" #RegisterUser="ngForm"
+                    (ngSubmit)="getUserRegistered(RegisterUser.value)">
                     <div class="d-flex justify-content-center align-items-center">
                         <h2>Create an Account</h2>
                     </div>
                     <div class="form-data">
-                        <div class="forms-inputs mb-4"> <span>Email</span> <input type="text"
-                                class="form-control">
+                        <div class="forms-inputs mb-4"> <span>Email</span> <input type="text" class="form-control"
+                                name="email" ngModel required>
 
                         </div>
-                        <div class="forms-inputs mb-4"> <span>Username</span> <input type="text"
-                            class="form-control">
-                        </div>
-
                         <div class="forms-inputs mb-4"> <span>Password</span> <input type="password"
-                                class="form-control">
+                                class="form-control" name="password" ngModel>
 
                         </div>
-                        <div class="forms-inputs mb-4"> <span>Confirm Password</span> <input type="text"
-                            class="form-control">
+                        <div class="forms-inputs mb-4"> <span>Confirm Password</span> <input type="password"
+                                class="form-control" name="confirmPassword" ngModel>
                         </div>
                         <div class="mb-3">
-                            <button class="btn btn-dark w-100" >Register</button>
+                            <div class="text-danger">
+                                <div
+                                    *ngIf="RegisterUser.controls['email'].dirty&&RegisterUser.controls['email'].errors?.['required'].dirty">
+                                    <p>
+                                        Please Enter your email address
+                                    </p>
+                                </div>
+                                <div
+                                    *ngIf="RegisterUser.controls['password'].dirty&&RegisterUser.controls['password'].errors?.['minlength']">
+                                    <p>
+                                        Password must be at least 6 characters long.
+                                    </p>
+                                </div>
+                                <div
+                                    *ngIf="(RegisterUser.controls['password'].dirty ||RegisterUser.controls['confirmPassword'].dirty) &&  RegisterUser.controls['password'].value!=RegisterUser.controls['confirmPassword'].value">
+                                    <p>
+                                        Password and Confirm Password must be same.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="RegisterUser.valid"> -->
+                            <button
+                                class="btn btn-dark w-100" type="submit" [disabled]="RegisterUser.controls['email'].errors?.['required']||RegisterUser.controls['password'].value!=RegisterUser.controls['confirmPassword'].value||RegisterUser.controls['password'].errors?.['minlength']">Register</button>
+                            <!-- </div> -->
                         </div>
                     </div>
-                    <div class="form-footer">  
+                    <div class="form-footer">
                         <button class="btn btn-sm btn-outline-primary w-100" (click)="onLoginClick()">
                             Alredy have an account? Login
-                        </button> 
+                        </button>
                     </div>
                 </form>
             </div>

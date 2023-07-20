@@ -7,22 +7,35 @@
                         <h2>Login </h2>
                     </div>
                     <div class="form-data">
-                        <div class="forms-inputs mb-4"> <span>Email</span> <input type="text"
-                                class="form-control">
+                        <div class="forms-inputs mb-4"> <span>Email</span> <input type="email" class="form-control"
+                                name="email" ngModel>
 
                         </div>
                         <div class="forms-inputs mb-4"> <span>Password</span> <input type="password"
-                                class="form-control">
+                                class="form-control" name="password" ngModel>
 
                         </div>
-                        <div class="mb-3">
-                            <button class="btn btn-dark w-100" >Login</button>
+                        <div class="text-danger">
+                            <span
+                                *ngIf="LoginUser.controls['email'].dirty&&LoginUser.controls['email'].errors?.['email']">
+                                Please enter a valid email address
+                            </span>
+                            <span
+                                *ngIf="LoginUser.controls['password'].errors?.['required']">
+                                Please enter a valid password
+                            </span>
                         </div>
+
+                        <div >
+
+                            <button class="btn btn-dark w-100"type="submit" >Login</button>
+                        </div>
+
                     </div>
-                    <div class="form-footer"> <a href="#">Forgot password?</a> 
+                    <div class="form-footer"> <a href="#">Forgot password?</a>
                         <button class="btn btn-sm btn-outline-primary w-100" (click)="onRegisterClick()">
                             Sign up
-                        </button> 
+                        </button>
                     </div>
                 </form>
             </div>
