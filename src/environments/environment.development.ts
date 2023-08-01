@@ -3,6 +3,7 @@ export const environment = {
     firebaseConfig: {
         apiKey: "AIzaSyB4hirWVvx337nZt6aKiWyKLlrUvYhl2uE",
         authDomain: "socialshare-29eab.firebaseapp.com",
+        databaseURL: "https://socialshare-29eab-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "socialshare-29eab",
         storageBucket: "socialshare-29eab.appspot.com",
         messagingSenderId: "237724202041",

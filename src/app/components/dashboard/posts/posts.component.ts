@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 
 @Component({
   selector: 'app-posts',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent {
-
+@Input() posts: any[]=[];
+  constructor(private auths:FirebaseTSAuth) { }
 }

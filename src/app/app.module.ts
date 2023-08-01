@@ -1,8 +1,9 @@
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // import {FirebaseTs} from "firebasets/firebasets"
 import { AppRoutingModule } from './app-routing.module';
+import {MatIconModule} from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { AuthenticationComponent } from '../app/components/authentication/authentication.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -19,6 +20,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
 // import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import {MatButtonModule} from '@angular/material/button';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,8 @@ import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
     AngularFireAuthModule,
     ToastrModule.forRoot({
         preventDuplicates:true
-    })
+    }),
+    MatIconModule,
   ],
   providers: [FirebaseTSApp.init(environment.firebaseConfig),FirebaseTSAuth,provideAnimations(),provideToastr({
     preventDuplicates:true,
