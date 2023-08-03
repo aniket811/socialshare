@@ -1,0 +1,33 @@
+<mat-card class="example-card">
+    <mat-card-header class="d-flex justify-content-center align-items-center">
+     <mat-card-title>Create Post </mat-card-title>
+      
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+
+        <textarea placeholder="Caption Here"  #captions >
+        
+        
+        </textarea>
+          
+        <!-- </textarea> -->
+      </div>
+<div id="post-preview" *ngIf="selectedFile">
+  <img  id="post-preview-image" >
+</div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="warn">
+        <label for="photo-upload">
+          <input #photoSelector type="file" accept="image/*" (change)="onFileSelected(photoSelector)" id="photo-upload" style="display:none;">
+          <mat-icon>insert_photo</mat-icon>
+        </label>
+      </button>
+      <button mat-button color="primary" (click)="uploadPost(captions.value)">
+        <mat-icon>file_upload</mat-icon>
+        Upload
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  

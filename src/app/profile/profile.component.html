@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center align-content-center">
+    <h3>
+        Create your Profile!
+    </h3>
+
+</div>
+<label for="name "> 
+    Enter your name:
+</label>
+<input type="text" name="name" id="name" #DisplayName placeholder="Enter your name" class="form-control">
+ <button mat-flat-button color="primary" class="mt-2" (click)="addProfile(DisplayName.value)"> Create</button>

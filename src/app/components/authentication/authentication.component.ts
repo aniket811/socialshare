@@ -31,7 +31,7 @@ export class AuthenticationComponent implements OnInit {
         if(this.auth.getAuth().currentUser?.emailVerified){
           this.isLoading=false;
           this.toast.success("Logged in successfully","Success");
-          this.router.navigate(['/register']);
+          this.router.navigate(['/dashboard']);
           return ;
         }
         this.auth.sendVerificationEmail();
@@ -47,7 +47,9 @@ export class AuthenticationComponent implements OnInit {
   forgotPasswordEmailSend(){
       if(this.LoginUser.value.email.trim().length==0){
         this.toast.error("Please enter your email address","Error");
+        this.isLoading=false;
         return ;
+        
       }
       this.auth.sendPasswordResetEmail({
         email:this.LoginUser.value.email,

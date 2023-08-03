@@ -1,9 +1,9 @@
+import { MatIconModule } from '@angular/material/icon';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-// import {FirebaseTs} from "firebasets/firebasets"
 import { AppRoutingModule } from './app-routing.module';
-import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button'; 
 import { AppComponent } from './app.component';
 import { AuthenticationComponent } from '../app/components/authentication/authentication.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -18,9 +18,15 @@ import {FirebaseTSApp} from "firebasets/firebasetsApp/firebaseTSApp"
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
+import { CreatepostComponent } from './components/createpost/createpost.component';
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFireStore/firebaseTSFireStore';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 // import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import {MatButtonModule} from '@angular/material/button';
-
+import { MatCardModule } from '@angular/material/card';
+import { FirebaseTSStorage } from 'firebasets/firebasetsStorage/firebaseTSStorage';
+import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +36,8 @@ import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
     PostsComponent,
     HomeComponent,
     RegisterComponent,
+    CreatepostComponent,
+    ProfileComponent,
     
   ],
   imports: [
@@ -37,18 +45,24 @@ import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    CommonModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     ToastrModule.forRoot({
-        preventDuplicates:true
+      preventDuplicates:true
     }),
+    MatButtonModule,
     MatIconModule,
+    MatDialogModule,
+    MatCardModule
   ],
   providers: [FirebaseTSApp.init(environment.firebaseConfig),FirebaseTSAuth,provideAnimations(),provideToastr({
     preventDuplicates:true,
     closeButton:true,
     positionClass:"toast-top-right",
-  }),ToastrService],
+  }),ToastrService,FirebaseTSFirestore,
+  FirebaseTSStorage
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
@@ -57,3 +71,4 @@ export class AppModule {
   }
 
 }
+
