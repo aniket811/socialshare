@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
           this.isUserProfileExits=data.exists;
       }
     })
-    debugger;
+    
     return this.isUserProfileExits;
   }
 }

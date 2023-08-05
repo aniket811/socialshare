@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "angularx-social-login": "^4.1.0",
     "firebase": "^10.0.0",
     "firebase-tools": "^12.4.4",
     "firebasets": "^1.2.13",

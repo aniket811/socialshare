@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { ToastrService } from 'ngx-toastr';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-authentication',
@@ -11,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AuthenticationComponent implements OnInit {
   isLoading:boolean=false;
   @ViewChild('LoginUser') LoginUser:any;
-  constructor(private router:Router,private toast:ToastrService,private auth:FirebaseTSAuth) {}
+  constructor(private router:Router,private toast:ToastrService,private auth:FirebaseTSAuth,private authService:AuthServiceService) {}
   ngOnInit(){
   }
   onRegisterClick() {
@@ -30,6 +31,7 @@ export class AuthenticationComponent implements OnInit {
       onComplete:(user:any)=>{
         if(this.auth.getAuth().currentUser?.emailVerified){
           this.isLoading=false;
+          this.authService.isUserLoggedIn.next(true);
           this.toast.success("Logged in successfully","Success");
           this.router.navigate(['/dashboard']);
           return ;

@@ -21,6 +21,11 @@ import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
 import { CreatepostComponent } from './components/createpost/createpost.component';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFireStore/firebaseTSFireStore';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider
+} from 'angularx-social-login';
+
 // import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import {MatButtonModule} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -46,6 +51,7 @@ import { CommonModule } from '@angular/common';
     BrowserAnimationsModule,
     FormsModule,
     CommonModule,
+    SocialLoginModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     ToastrModule.forRoot({
@@ -61,7 +67,24 @@ import { CommonModule } from '@angular/common';
     closeButton:true,
     positionClass:"toast-top-right",
   }),ToastrService,FirebaseTSFirestore,
-  FirebaseTSStorage
+  FirebaseTSStorage,
+  {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            environment.google
+          )
+        }
+      ],
+      onError: (err) => {
+        console.error(err);
+      }
+    } as SocialAuthServiceConfig,
+  }
 ],
   bootstrap: [AppComponent]
 })
