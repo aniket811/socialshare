@@ -1,6 +1,6 @@
 import { MatIconModule } from '@angular/material/icon';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import {MatButtonModule} from '@angular/material/button'; 
@@ -20,18 +20,20 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { ToastrModule, ToastrService, provideToastr } from 'ngx-toastr';
 import { CreatepostComponent } from './components/createpost/createpost.component';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFireStore/firebaseTSFireStore';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { MatDialogModule } from '@angular/material/dialog';
+import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, SocialAuthService } from 'angularx-social-login';
 import {
   GoogleLoginProvider
 } from 'angularx-social-login';
-
+// import { AslGoogleSigninButtonComponent } from 'angularx-social-login/providers/google-login-provider';
 // import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import {MatButtonModule} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { FirebaseTSStorage } from 'firebasets/firebasetsStorage/firebaseTSStorage';
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +62,9 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    GoogleSigninButtonModule
+    
   ],
   providers: [FirebaseTSApp.init(environment.firebaseConfig),FirebaseTSAuth,provideAnimations(),provideToastr({
     preventDuplicates:true,
@@ -84,7 +88,8 @@ import { CommonModule } from '@angular/common';
         console.error(err);
       }
     } as SocialAuthServiceConfig,
-  }
+  },
+  SocialAuthService
 ],
   bootstrap: [AppComponent]
 })

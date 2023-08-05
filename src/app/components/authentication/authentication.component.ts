@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { ToastrService } from 'ngx-toastr';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-authentication',
@@ -12,7 +14,7 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 export class AuthenticationComponent implements OnInit {
   isLoading:boolean=false;
   @ViewChild('LoginUser') LoginUser:any;
-  constructor(private router:Router,private toast:ToastrService,private auth:FirebaseTSAuth,private authService:AuthServiceService) {}
+  constructor(private router:Router,private toast:ToastrService,private auth:FirebaseTSAuth,private authService:AuthServiceService,private oauthService:SocialAuthService) {}
   ngOnInit(){
   }
   onRegisterClick() {

@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit{
     this.authService.signOut({
       onComplete:()=>{
         this.router.navigateByUrl("/login")
+        this.authUserService.isUserLoggedIn.next(false);
       }
     })
   }
@@ -32,21 +33,9 @@ export class NavbarComponent implements OnInit{
     this.authUserService.isUserLoggedIn.subscribe((value)=>{
     this.isUserLoggedIn=value; 
       if(this.isUserLoggedIn){
-        // this.firestore.getCollection({
-        //   // path:['profile',this.authService.getAuth().currentUser?.uid!],
-        //   // onComplete:(data:any)=>{
-        //   //   if(data.exists)
-        //   //     this.displayName=data;
-        //   //   console.log(data);
-            
-        //   //   this.displayName="Guest"
-        //   // }
-        // )
         this.firestore.getDocument({
           path:['profile',this.authService.getAuth().currentUser?.uid!],
           onComplete:(data:any)=>{
-
-
               console.log(data._delegate._document.data.value.mapValue.fields.data.stringValue);
               this.displayName=data._delegate._document.data.value.mapValue.fields.data.stringValue
             
@@ -55,7 +44,6 @@ export class NavbarComponent implements OnInit{
       }
 
     })
-    
     return this.isUserLoggedIn;
   }
   
