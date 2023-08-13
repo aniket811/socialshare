@@ -29,11 +29,13 @@ import {
 // import { AslGoogleSigninButtonComponent } from 'angularx-social-login/providers/google-login-provider';
 // import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import {MatButtonModule} from '@angular/material/button';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'
 import { MatCardModule } from '@angular/material/card';
 import { FirebaseTSStorage } from 'firebasets/firebasetsStorage/firebaseTSStorage';
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
-
+import {MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerComponent } from './components/spinner/spinner.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +47,7 @@ import { CommonModule } from '@angular/common';
     RegisterComponent,
     CreatepostComponent,
     ProfileComponent,
+    SpinnerComponent,
     
   ],
   imports: [
@@ -63,8 +66,9 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatDialogModule,
     MatCardModule,
-    GoogleSigninButtonModule
-    
+    GoogleSigninButtonModule,
+    MatProgressSpinnerModule,
+    MatSlideToggleModule
   ],
   providers: [FirebaseTSApp.init(environment.firebaseConfig),FirebaseTSAuth,provideAnimations(),provideToastr({
     preventDuplicates:true,

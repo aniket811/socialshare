@@ -1,3 +1,7 @@
 <app-navbar></app-navbar>
- <router-outlet></router-outlet> 
+<!-- <div class="d-flex justify-content-center align-items-center " > 
+    <app-spinner></app-spinner>
+ </div>  -->
+     <router-outlet *ngIf="!showSpinner"></router-outlet> 
+
  

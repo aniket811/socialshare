@@ -4,8 +4,8 @@
 </div>
 <div *ngIf="isUserProfileExits==true">
 
-
-    <button mat-flat-button class="post-button" color="warn" (click)="getAddPost()">
+    <app-posts *ngFor="let postsInfo of postDatas" [posts]="postsInfo"></app-posts>
+    <button mat-flat-button class="post-button" color="primary" (click)="getAddPost()">
         <mat-icon>add</mat-icon>
         <span>Add Post</span>
     </button>

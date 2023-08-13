@@ -5,26 +5,28 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active">
+       
+        
+
+          <li class="nav-item " align="left" *ngIf="!isUserLoggedIn">
+            <a class="nav-link" routerLink="login">Hello Guest !</a>
+          </li>
+        
+        
+        <li class="nav-item " *ngIf="isUserLoggedIn">
           <a class="nav-link" >Home</a>
         </li>
-        <div *ngIf="!isUserLoggedIn">
-
-          <li class="nav-item " align="left" >
-            <a class="nav-link" >Hello Guest !</a>
-          </li>
-        </div>
-        <div *ngIf="isUserLoggedIn">
-
-          <li class="nav-item " align="left" >
-            <a class="nav-link" > Hello {{displayName}} !</a>
-          </li>
-          <li class="nav-item " >
+          
+          <li class="nav-item " *ngIf="isUserLoggedIn">
             <a class="nav-link" (click)="logout()"> Logout from {{displayName}}</a>
           </li>
-        </div>
+        
       </ul>
+
     </div>
-    
+    <mat-slide-toggle [checked]="darkMode()"> 
+      Change Theme
+    </mat-slide-toggle>
+ 
 </nav>
    

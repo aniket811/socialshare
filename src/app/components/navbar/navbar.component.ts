@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFireStore/firebaseTSFireStore';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
-
+import {Renderer2 } from '@angular/core'
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit{
   isUserLoggedIn:boolean=false;
   displayName:string='Guest';
   isUserProfileExist:boolean=false;
-    constructor(private authService:FirebaseTSAuth,private router:Router,private authUserService:AuthServiceService,private firestore:FirebaseTSFirestore) {
+    constructor(private renderer:Renderer2,private authService:FirebaseTSAuth,private router:Router,private authUserService:AuthServiceService,private firestore:FirebaseTSFirestore) {
       
     }
   ngOnInit(): void {
@@ -47,5 +47,7 @@ export class NavbarComponent implements OnInit{
     return this.isUserLoggedIn;
   }
   
-  
+  darkMode():any{
+    this.renderer.addClass('bg-dark','nightmode');
+  }
 }
