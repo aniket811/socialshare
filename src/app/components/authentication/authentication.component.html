@@ -7,40 +7,46 @@
                         <h2>Login </h2>
                     </div>
                     <div class="form-data">
-                        <div class="forms-inputs mb-4"> <span>Email</span> <input type="email" class="form-control"
+                        <div class="forms-input mb-4"> <span>Email</span> <input type="email" class="form-control"
                                 name="email" ngModel>
 
                         </div>
-                        <div class="forms-inputs mb-4"> <span>Password</span> <input type="password"
+                        <div class="forms-input mb-4"> <span>Password</span> <input type="{{showPasswordInput}}"
                                 class="form-control" name="password" ngModel>
 
                         </div>
+                        <span class="mb-2">
+                            <input type="checkbox" name="showPassword" [checked]="isShowPasswordChecked"
+                                (change)="showPassword(LoginUser,showPasswordInput)"/>
+                          
+                                <a (click)="showPassword(LoginUser,showPasswordInput)" >  
+                                  Show Password
+                                </a>
+                        
+
+                        </span>
                         <div class="text-danger">
                             <span
-                                *ngIf="LoginUser.controls['email'].dirty&&LoginUser.controls['email'].errors?.['email']">
+                            *ngIf="LoginUser.controls['email'].dirty&&LoginUser.controls['email'].errors">
                                 Please enter a valid email address
                             </span>
-                            <span
-                                *ngIf="LoginUser.controls['password'].errors?.['required']">
+                            <span *ngIf="LoginUser.controls['password'].errors?.['required']">
                                 Please enter a valid password
                             </span>
                         </div>
-
-                        <div >
-                            
-                            <button class="btn btn-dark w-100"type="submit" [disabled]="isLoading">
-                             <span *ngIf="isLoading">
-                                Please wait...
-                             </span>
-                             <span *ngIf="!isLoading">
+                        <div>
+                            <button class="btn btn-dark w-100" type="submit" [disabled]="isLoading">
+                                <span *ngIf="isLoading">
+                                    Please wait...
+                                </span>
+                                <span *ngIf="!isLoading">
                                     Login
                                 </span>
                             </button>
                         </div>
-
                     </div>
-                    <div class="form-footer mt-1 mb-2"> 
-                        <a  (click)="forgotPasswordEmailSend()">
+                    <div class="form-footer mt-1 mb-2">
+                        <a (click)="forgotPasswordEmailSend()">
                             Forgot password?
                         </a>
                         <button class="btn btn-sm btn-outline-primary w-100" (click)="onRegisterClick()">

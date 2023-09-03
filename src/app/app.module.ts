@@ -26,6 +26,7 @@ import { SocialLoginModule, SocialAuthServiceConfig, SocialAuthService } from 'a
 import {
   GoogleLoginProvider
 } from 'angularx-social-login';
+// import {loc}
 // import { AslGoogleSigninButtonComponent } from 'angularx-social-login/providers/google-login-provider';
 // import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 // import {MatButtonModule} from '@angular/material/button';
@@ -36,6 +37,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
 import {MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './components/spinner/spinner.component'
+import { LocalStorageService } from 'ngx-webstorage';
+import { loggedin } from './guards/loggedin.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,7 +96,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component'
       }
     } as SocialAuthServiceConfig,
   },
-  SocialAuthService
+  SocialAuthService,
+  LocalStorageService,
+  loggedin
 ],
   bootstrap: [AppComponent]
 })

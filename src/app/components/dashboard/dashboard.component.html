@@ -1,10 +1,10 @@
 <div *ngIf="isUserProfileExits==false">
 
-    <app-profile></app-profile>
+    <app-profile ></app-profile>
 </div>
 <div *ngIf="isUserProfileExits==true">
 
-    <app-posts *ngFor="let postsInfo of postDatas" [posts]="postsInfo"></app-posts>
+    <app-posts *ngFor="let postsInfo of postDatas" [posts]="postsInfo" class="posts"></app-posts>
     <button mat-flat-button class="post-button" color="primary" (click)="getAddPost()">
         <mat-icon>add</mat-icon>
         <span>Add Post</span>

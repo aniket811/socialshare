@@ -14,19 +14,16 @@
         
         
         <li class="nav-item " *ngIf="isUserLoggedIn">
-          <a class="nav-link" >Home</a>
+          <a class="nav-link" (click)="reloadApp()">Home</a>
         </li>
           
           <li class="nav-item " *ngIf="isUserLoggedIn">
-            <a class="nav-link" (click)="logout()"> Logout from {{displayName}}</a>
+            <a class="nav-link" (click)="logout()" > Logout from {{displayName}}</a>
           </li>
         
       </ul>
 
     </div>
-    <mat-slide-toggle [checked]="darkMode()"> 
-      Change Theme
-    </mat-slide-toggle>
  
 </nav>
    

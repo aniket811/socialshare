@@ -7,17 +7,21 @@ import { FirebaseTSFirestore, Limit } from 'firebasets/firebasetsFireStore/fireb
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit{
-@Input() posts!:PostData;
-creatorName:string|undefined;
+export class PostsComponent implements OnInit {
+  @Input() posts!: PostData;
+  creatorName: string | undefined;
 
-constructor(private auths:FirebaseTSAuth,private firestore:FirebaseTSFirestore) { }
-ngOnInit(): void {
- 
+  constructor(private auths: FirebaseTSAuth, private firestore: FirebaseTSFirestore) { }
+  ngOnInit(): void {
+    console.log(this.posts);
+  }
 }
-}
-export interface PostData{
-  captions:string;
-  creatorId:string;
-  Image?:string;
+export interface PostData {
+  captions: string;
+  creatorId: string;
+  ImageUrl?: string;
+  creatorName: string;
+  createdAt: Date;
+  likes: number;
+  comments: number;
 }
