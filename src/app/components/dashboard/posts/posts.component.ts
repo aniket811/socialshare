@@ -13,7 +13,6 @@ export class PostsComponent implements OnInit {
 
   constructor(private auths: FirebaseTSAuth, private firestore: FirebaseTSFirestore) { }
   ngOnInit(): void {
-    console.log(this.posts);
   }
 }
 export interface PostData {

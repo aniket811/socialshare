@@ -18,7 +18,7 @@ export class loggedin implements CanActivate {
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    debugger;
+    
     let  isLoggedInSuccessful =false;
     const userCredsString = sessionStorage.getItem('socialShare');
     const parsedUserCreds = userCredsString ? JSON.parse(userCredsString) : null;

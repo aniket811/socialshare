@@ -1,7 +1,7 @@
 <div *ngIf="isUserProfileExits==false">
 <div class="container">
    
-            <app-profile ></app-profile>
+            <app-profile (profileName)="profileNameAdded()" ></app-profile>
    
 </div>
 </div>

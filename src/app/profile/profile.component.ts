@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFireStore/firebaseTSFireStore';
@@ -27,6 +27,8 @@ export class ProfileComponent  implements OnInit{
     private auths:AuthServiceService,
     private imageService:ImageService
     ) { }
+    @Output () profileName:EventEmitter<boolean> =new EventEmitter<boolean>(false);
+
   ngOnInit(): void {
       this.alreadyProfileImage();
   }
@@ -40,6 +42,7 @@ export class ProfileComponent  implements OnInit{
         this.auths.isUserProfileExists.next(true);
         this.toast.success("Profile Created Successfully");
         this.auths.UserProfileName.next(name);  
+        this.profileName.emit(true);
       },
 
     })
@@ -59,10 +62,8 @@ export class ProfileComponent  implements OnInit{
         path:["profile",this.authService.getAuth().currentUser?.uid!],
         onComplete:(data:any)=>{
           if(data.exists){
-            //console.log(data._delegate._document.data.value.mapValue.fields.imageUrl);
              this.profileimageUrl=data._delegate._document.data.value.mapValue.fields.imageUrl.stringValue;
             this.changeProfileImage(this.profileimageUrl);
-          
           }
         },
         onFail:(err)=> {
@@ -73,10 +74,7 @@ export class ProfileComponent  implements OnInit{
       return this.profileimageUrl;
     })  
   }
-  changeProfileImage(event:any){  
-    debugger;
-    // const reader=new FileReader();
-    // reader.onload=(e)=>{
+  changeProfileImage(event:any){
       this.profile.nativeElement.src=event;
 
   }

@@ -16,25 +16,19 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  isUserProfileExits: boolean = true;
-  postDatas: PostData[]=[];
+  isUserProfileExits: boolean = false;
+  postDatas: PostData[] = [];
   ngOnInit(): void {
-
-    // if(this.customAuthService.isUserProfileExists.value==true){
-      
-    //   this.isuserProfileCreated();
-    // }
     this.isuserProfileCreated();
     this.getPosts();
-   
   }
   constructor(
     private toast: ToastrService,
     private firestore: FirebaseTSFirestore,
     private dialog: MatDialog,
     private authService: FirebaseTSAuth,
-    private customAuthService:AuthServiceService
-  ) {}
+    private customAuthService: AuthServiceService
+  ) { }
   getAddPost() {
     this.dialog.open(CreatepostComponent);
   }
@@ -42,20 +36,22 @@ export class DashboardComponent implements OnInit {
     this.firestore.getDocument({
       path: ['profile', this.authService.getAuth().currentUser?.uid!],
       onComplete: (data: any) => {
+        console.log(data);
+        
+        // revert this value if there is any bug in this code
+        if(data.exists){
 
-
-        if(data.data!=undefined||!data._delegate._document.data.value.mapValue.fields.hasOwnProperty('data')){          
-          this.isUserProfileExits = false;
-          
-          
+          if (data._delegate._document.data.value.mapValue.fields.hasOwnProperty('data')) {
+            this.isUserProfileExits = true;
+          }
         }
-        else if(data.data==undefined||data._delegate._document.data.value.mapValue.fields.hasOwnProperty('data')){
-          this.isUserProfileExits = true;
+        
+
+        else if (!data._delegate._document.data.value.mapValue.fields.hasOwnProperty('data')) {
+          this.isUserProfileExits = false;
         }
       },
     });
-    
-    this.customAuthService.isUserProfileExists.next(this.isUserProfileExits)
     return this.isUserProfileExits;
   }
   getPosts() {
@@ -63,24 +59,31 @@ export class DashboardComponent implements OnInit {
       path: ['Posts'],
       where: [new Limit(10)],
       onComplete: (PostdataInfo: any) => {
-        console.log(PostdataInfo);
-        
-        PostdataInfo.docs.forEach((data: any) => {
-       this.postDatas.push(data.data())
-       console.log(this.postDatas);
-          
-      })
-      ;
-      this.firestore.getCollection({
-        path:['profile'],
-        where:[
 
-        ],
-        onComplete:()=>{
-          
-        }
-      })
+        PostdataInfo.docs.forEach((data: any) => {
+          this.postDatas.push(data.data())
+
+        })
+          ;
+        this.firestore.getCollection({
+          path: ['profile'],
+          where: [
+
+          ],
+          onComplete: () => {
+
+          }
+        })
       },
     });
-  }   
+  }
+  //After Profile Created and name added 
+  profileNameAdded() {
+    if (this.customAuthService.isUserProfileExists.value == true) {
+
+      this.isUserProfileExits = true;
+    }
+    // this.isuserProfileCreated();
+    // this.getPosts();
+  }
 }

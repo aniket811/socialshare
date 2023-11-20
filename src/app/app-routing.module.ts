@@ -9,10 +9,10 @@ import { loggedin } from './guards/loggedin.guard';
 
 const routes: Routes = [
   {path:'',component:HomeComponent,},
-  {path:'login',component:AuthenticationComponent,} ,
-  {path:'register',component:RegisterComponent},
+  {path:'login',component:AuthenticationComponent,canActivate:[authenticationGuard]} ,
+  {path:'register',component:RegisterComponent,canActivate:[authenticationGuard]},
   {path:'dashboard',component:DashboardComponent,canActivate:[authenticationGuard]},
-  {path:'**',component:AuthenticationComponent},
+  {path:'**',component:AuthenticationComponent,},
 ];
 
 @NgModule({

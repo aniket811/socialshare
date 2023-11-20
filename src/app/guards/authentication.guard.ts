@@ -24,9 +24,12 @@ export class authenticationGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    debugger;
     if (this.authService.isSignedIn()) {
       if (this.authService.isEmailVerified()) {
+        if(state.url=="/login"){
+          this.router.navigateByUrl('/dashboard');
+          return false;
+        }
         this.auths.isUserLoggedIn.next(true);
         return true;
       } else {
@@ -53,7 +56,7 @@ export class authenticationGuard implements CanActivate {
 
     }
     this.router.navigateByUrl('/login');
-    return false;
+    return true;
   }
 }
 

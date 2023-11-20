@@ -50,6 +50,7 @@ export class AuthenticationComponent implements OnInit {
         }        
       })
     }
+
     return; 
   }
   
@@ -83,13 +84,13 @@ export class AuthenticationComponent implements OnInit {
           this.isLoading = false;
           this.authService.isUserLoggedIn.next(true);
           this.toast.success("Logged in successfully", "Success");
-          if(this.isRememberMeChecked){
+       
             const loginData={
               email:userData.email,
               password:userData.password
             }
             sessionStorage.setItem('socialShare',JSON.stringify(loginData));
-          }
+          
           this.router.navigate(['/dashboard']);
           return;
         }

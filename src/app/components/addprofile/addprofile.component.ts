@@ -40,7 +40,7 @@ export class AddprofileComponent implements OnInit {
     }
     const reader = new FileReader();
     reader.readAsDataURL(profileImage);
-    debugger;
+    
     this.firestorage.upload({
       uploadName: 'Profile Upload',
       path: ['profile', 'images', userId],
@@ -50,7 +50,6 @@ export class AddprofileComponent implements OnInit {
       },
       onComplete: (downloadUrl: any) => {
         this.isProfileUploaded = true;
-        console.log(this.isProfileUploaded);
         
         this.toast.success('Profile Image Uploaded Successfully');
         // Checking if the username is registered for a given user 
@@ -58,7 +57,6 @@ export class AddprofileComponent implements OnInit {
           path: ['profile', userId],
           onComplete: (data: any) => {
             isUsernameExist=data.exists;
-            console.log(isUsernameExist);
             if (!isUsernameExist) {
               this.firestore.create({
                 path: ['profile', userId],
@@ -66,11 +64,9 @@ export class AddprofileComponent implements OnInit {
                   imageUrl: downloadUrl
                 },
                 onComplete: (data) => {
-                  console.log(data);
                   
                 },
                 onFail: (error: any) => {
-                  console.log(error);
                 },
               })
             }
@@ -81,11 +77,9 @@ export class AddprofileComponent implements OnInit {
                   imageUrl: downloadUrl
                 },
                 onComplete: (data) => {
-                  console.log(data);
                   
                 },
                 onFail(error: any) {
-                  console.log(error);
                 },
               })
             }

@@ -27,7 +27,6 @@ export class CreatepostComponent implements OnInit {
     private authService:AuthServiceService
   ) {   
     this.authService.UserProfileName.subscribe((profileName:any)=>{
-      console.log(profileName);
       this.userName=profileName
     })}
   ngOnInit():void{
