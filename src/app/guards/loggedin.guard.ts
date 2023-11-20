@@ -7,35 +7,48 @@ import { Toast, ToastrService } from 'ngx-toastr';
 import { EncryptStorage } from 'encrypt-storage';
 
 @Injectable({
-  providedIn:'root'
-}) 
-export class loggedin implements CanActivate{
-  encryptionService=new EncryptStorage('U2FsdGVkX1/2KEwOH+w4QaIcyq5521ZXB5pqw');
-  constructor(private auths:FirebaseTSAuth,
-      private authService:AuthServiceService,
-    private toast:ToastrService,
-    private router:Router
-    ){
+  providedIn: 'root'
+})
+export class loggedin implements CanActivate {
+  constructor(private auths: FirebaseTSAuth,
+    private authService: AuthServiceService,
+    private toast: ToastrService,
+    private router: Router
+  ) {
 
   }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean {
-   
-      const userCreds = this.encryptionService.getItem('encryptedData',false);
-      if(userCreds!=null){
-        this.auths.signInWith(({
-          email:userCreds.email,
-          password:userCreds.password,
-          onComplete:()=>{
-            this.authService.isUserLoggedIn.next(true);
-            this.toast.success("Logged in successfully", "Success");
-            this.router.navigate(['/dashboard']);
-          },
-          onFail:(error:any)=>{
-            this.toast.error("An error occured please login again!")
-            return false;
-          }
-        }))
-      }
-      return true;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    debugger;
+    let  isLoggedInSuccessful =false;
+    const userCredsString = sessionStorage.getItem('socialShare');
+    const parsedUserCreds = userCredsString ? JSON.parse(userCredsString) : null;
+    if (parsedUserCreds != null) {
+      this.auths.signInWith(({
+        email: parsedUserCreds.email,
+        password: parsedUserCreds.password,
+        onComplete: () => {
+          this.authService.isUserLoggedIn.next(true);
+          this.toast.success("Logged in successfully", "Success");
+          isLoggedInSuccessful=true;
+
+        },
+        onFail: (error: any) => {
+          this.toast.error("An error occured please login again!");
+          isLoggedInSuccessful=false;
+          
+        }
+      })
+      )
+      return isLoggedInSuccessful;
+
     }
+    // if (this.authService.isUserLoggedIn.value == true) {
+    //   return true;
+    // }
+    if (this.authService.isUserLoggedIn.value == true) {
+  
+      return false;
+    }
+    else return false;
+  }
 }

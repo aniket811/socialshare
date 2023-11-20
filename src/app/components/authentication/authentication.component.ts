@@ -1,19 +1,13 @@
-// import { auth } from 'firebase/auth';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-// import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { ToastrService } from 'ngx-toastr';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-
-// import { EncryptStorage } from 'encrypt-storage/dist/encrypt-storage';
 import { Auth } from 'firebase/auth'
 import { LocalStorageService } from 'ngx-webstorage'
 import { EncryptStorage } from 'encrypt-storage';
-// import * as SecureLS from 'secure-ls';
-// 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
@@ -23,6 +17,8 @@ export class AuthenticationComponent implements OnInit {
   isLoading: boolean = false;
   isShowPasswordChecked:boolean=false;
   showPasswordInput:string="password";
+
+  isRememberMeChecked:boolean=false;
   // securels=new SecureLS({encodingType:'aes',isCompression:false})/;
   @ViewChild('LoginUser') LoginUser: any;
   constructor(private router: Router, private toast: ToastrService,
@@ -31,11 +27,37 @@ export class AuthenticationComponent implements OnInit {
     private storage: LocalStorageService,
 
     private authService: AuthServiceService) { }
-  encryptionService = new EncryptStorage('U2FsdGVkX1/2KEwOH+w4QaIcyq5521ZXB5pqw', {
-    storageType: 'localStorage'
-  });
+ 
   ngOnInit() {
-    
+    if(sessionStorage.getItem('socialShare')!=null){
+      const socialShareData=JSON.parse(sessionStorage.getItem('socialShare')!);
+      this.LoginUser.controls.email.setValue(socialShareData.email);
+      this.LoginUser.controls.password.setValue(socialShareData.password);
+      this.auths.signInWith({
+        email: socialShareData.email,
+        password: socialShareData.password,
+        onComplete: (user: any) => {
+          if (this.auths.getAuth().currentUser?.emailVerified) {
+            this.isLoading = false;
+            this.authService.isUserLoggedIn.next(true);
+            this.toast.success("Logged in successfully", "Success");
+            this.router.navigate(['/dashboard']);
+            return;
+          }
+          this.auths.sendVerificationEmail();
+          this.toast.error("Please verify your email address and try login back", "Error");
+          this.isLoading = false;
+        }        
+      })
+    }
+    return; 
+  }
+  
+ 
+  
+  RememberMe(data:any){
+    this.isRememberMeChecked=data.target.checked;
+   
   }
   onRegisterClick() {
     this.router.navigate(['/register']);
@@ -43,8 +65,10 @@ export class AuthenticationComponent implements OnInit {
   storeData(data: any) {
     this.storage.store('userLogin', data);
   }
+
   // Method for user to get logged  in if they have an account and email verified
   getUserLogin(userData: any) {
+      
     this.isLoading = true;
     if (userData.email.trim().length == 0 || userData.password.trim().length == 0) {
       this.toast.error("Please enter all the fields", "Error");
@@ -59,16 +83,19 @@ export class AuthenticationComponent implements OnInit {
           this.isLoading = false;
           this.authService.isUserLoggedIn.next(true);
           this.toast.success("Logged in successfully", "Success");
-          const authSession = {
-            email: userData.email,
-            password: userData.password
+          if(this.isRememberMeChecked){
+            const loginData={
+              email:userData.email,
+              password:userData.password
+            }
+            sessionStorage.setItem('socialShare',JSON.stringify(loginData));
           }
-          this.encryptionService.setItem('encryptedData', authSession);
           this.router.navigate(['/dashboard']);
           return;
         }
         this.auths.sendVerificationEmail();
         this.toast.error("Please verify your email address and try login back", "Error");
+        this.isLoading = false;
       },
       onFail: (error: any) => {
         this.isLoading = false;

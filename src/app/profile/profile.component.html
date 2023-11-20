@@ -1,11 +1,21 @@
-<div class="d-flex justify-content-center align-content-center">
-    <h3>
-        Create your Profile!
-    </h3>
+<div class="d-flex justify-content-center align-content-center ">
+    <h2>Create a Profile <span>
+            <mat-icon style="margin-bottom: -4px;">account_circle</mat-icon>
+        </span> </h2>
 
 </div>
-<label for="name "> 
+<div class="d-flex justify-content-center align-content-center">
+
+
+    <input [type]="inputType" #profile [src]="profileimageUrl" alt="Select Profile Image" class="profileImage">
+
+</div>
+<div class="d-flex justify-content-center align-items-center">
+    <button mat-raised-button color="primary" [type]='inputType' (click)="openProfileInput()">
+        <mat-icon>add_a_photo</mat-icon> Add a Profile</button>
+</div>
+<label for="name ">
     Enter your name:
 </label>
 <input type="text" name="name" id="name" #DisplayName placeholder="Enter your name" class="form-control">
- <button mat-flat-button color="primary" class="mt-2" (click)="addProfile(DisplayName.value)"> Create</button>
+<button mat-flat-button color="primary" class="mt-2" (click)="addProfile(DisplayName.value)"> Create</button>

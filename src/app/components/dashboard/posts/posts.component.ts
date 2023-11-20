@@ -24,4 +24,5 @@ export interface PostData {
   createdAt: Date;
   likes: number;
   comments: number;
+  profileImageUrl: string; 
 }

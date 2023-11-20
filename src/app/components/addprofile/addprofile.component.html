@@ -1,0 +1,17 @@
+<div class="container" >
+    <div class="d-flex.justify-content-center.align-content-center " style="text-align: center;">
+
+        <h2>
+            <b>Select a Profile</b>
+        </h2>
+    </div> 
+  <div>
+
+      <input type="file" #profileImages name="image" required  accept="image/*"  class="profile-input"/>
+      <button mat-raised-button   class="primary" type="submit" (click)="imageUpload(profileImages)">
+          <mat-icon>add_a_photo</mat-icon>
+          OK
+     </button>
+    </div>
+ 
+</div>

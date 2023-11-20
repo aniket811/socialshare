@@ -9,6 +9,7 @@ import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { PostData } from './posts/posts.component';
 import { ToastrService } from 'ngx-toastr';
 import { provideProtractorTestingSupport } from '@angular/platform-browser';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,7 +19,11 @@ export class DashboardComponent implements OnInit {
   isUserProfileExits: boolean = true;
   postDatas: PostData[]=[];
   ngOnInit(): void {
-    this.isuserProfileCreated();
+
+    if(this.customAuthService.isUserProfileExists.value==true){
+      
+      this.isuserProfileCreated();
+    }
     this.getPosts();
    
   }
@@ -26,7 +31,8 @@ export class DashboardComponent implements OnInit {
     private toast: ToastrService,
     private firestore: FirebaseTSFirestore,
     private dialog: MatDialog,
-    private authService: FirebaseTSAuth
+    private authService: FirebaseTSAuth,
+    private customAuthService:AuthServiceService
   ) {}
   getAddPost() {
     this.dialog.open(CreatepostComponent);
@@ -35,10 +41,20 @@ export class DashboardComponent implements OnInit {
     this.firestore.getDocument({
       path: ['profile', this.authService.getAuth().currentUser?.uid!],
       onComplete: (data: any) => {
-        this.isUserProfileExits = data.exists;
+
+
+        if(data.data!=undefined||!data._delegate._document.data.value.mapValue.fields.hasOwnProperty('data')){          
+          this.isUserProfileExits = false;
+          
+          
+        }
+        else if(data.data==undefined||data._delegate._document.data.value.mapValue.fields.hasOwnProperty('data')){
+          this.isUserProfileExits = true;
+        }
       },
     });
-
+    
+    this.customAuthService.isUserProfileExists.next(this.isUserProfileExits)
     return this.isUserProfileExits;
   }
   getPosts() {
@@ -46,6 +62,8 @@ export class DashboardComponent implements OnInit {
       path: ['Posts'],
       where: [new Limit(10)],
       onComplete: (PostdataInfo: any) => {
+        console.log(PostdataInfo);
+        
         PostdataInfo.docs.forEach((data: any) => {
        this.postDatas.push(data.data())
        console.log(this.postDatas);

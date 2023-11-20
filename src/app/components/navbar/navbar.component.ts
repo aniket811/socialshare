@@ -4,6 +4,7 @@ import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFireStore/firebaseTSFireStore';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import {Renderer2 } from '@angular/core'
+import {MatMenuModule} from '@angular/material/menu';
 import { EncryptStorage } from 'encrypt-storage';
 @Component({
   selector: 'app-navbar',
@@ -11,15 +12,15 @@ import { EncryptStorage } from 'encrypt-storage';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
+  profileImageUrl:string="../../../assets/No-Instagram-Profile-Pic-removebg-preview.png"
   encryptionService=new EncryptStorage('U2FsdGVkX1/2KEwOH+w4QaIcyq5521ZXB5pqw',{
     storageType:'localStorage'
   })
+
   isUserLoggedIn:boolean=false;
   displayName:string='Guest';
   isUserProfileExist:boolean=false;
-    constructor(private auth:AuthServiceService,private renderer:Renderer2,private authService:FirebaseTSAuth,private router:Router,private authUserService:AuthServiceService,private firestore:FirebaseTSFirestore) {
-      
-    }
+    constructor(private auth:AuthServiceService,private renderer:Renderer2,private authService:FirebaseTSAuth,private router:Router,private authUserService:AuthServiceService,private firestore:FirebaseTSFirestore) {}
   ngOnInit(): void {
     this.isLoggedIn();
   }
@@ -28,7 +29,7 @@ export class NavbarComponent implements OnInit{
     this.authService.signOut({
       onComplete:()=>{
         this.authUserService.isUserLoggedIn.next(false);
-        this.encryptionService.removeItem('encryptedData');
+        sessionStorage.removeItem('socialShare');
         this.router.navigateByUrl("/login")
 
       }
@@ -44,6 +45,7 @@ export class NavbarComponent implements OnInit{
           path:['profile',this.authService.getAuth().currentUser?.uid!],
           onComplete:(data:any)=>{
               let userName=data._delegate._document.data.value.mapValue.fields.data.stringValue;
+              console.log(data);
               this.authUserService.UserProfileName.next(userName)
               this.authUserService.UserProfileName.subscribe((name:any)=>{
                 this.displayName=name;

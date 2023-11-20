@@ -39,6 +39,8 @@ import {MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './components/spinner/spinner.component'
 import { LocalStorageService } from 'ngx-webstorage';
 import { loggedin } from './guards/loggedin.guard';
+import { AddprofileComponent } from './components/addprofile/addprofile.component';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { loggedin } from './guards/loggedin.guard';
     CreatepostComponent,
     ProfileComponent,
     SpinnerComponent,
+    AddprofileComponent,
     
   ],
   imports: [
@@ -71,7 +74,8 @@ import { loggedin } from './guards/loggedin.guard';
     MatCardModule,
     GoogleSigninButtonModule,
     MatProgressSpinnerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatMenuModule
   ],
   providers: [FirebaseTSApp.init(environment.firebaseConfig),FirebaseTSAuth,provideAnimations(),provideToastr({
     preventDuplicates:true,

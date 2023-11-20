@@ -1,0 +1,6 @@
+.profileImage{
+    width: 200px; /* Adjust as needed */
+  height: 200px; /* Adjust as needed */
+  border-radius: 50%;
+  overflow: hidden;
+}

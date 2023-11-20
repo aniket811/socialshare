@@ -119,6 +119,15 @@ export class CreatepostComponent implements OnInit {
             captions: captions,
             likes: 0,
             comments: 0,
+            profileurl:this.firestore.getDocument({
+              path:['profile',this.userId],
+              onComplete:(data:any)=>{
+                return data.profileurl
+              },
+              onFail:()=>{
+                return null;
+              }
+            }) ,           
             createdAt: FirebaseTSApp.getFirestoreTimestamp(),
           },
           onComplete: () => {
@@ -150,4 +159,5 @@ export class CreatepostComponent implements OnInit {
     this.uploadImage(Captions);
     return;
   }
+
 }

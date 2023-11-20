@@ -8,10 +8,10 @@ import { authenticationGuard } from './guards/authentication.guard';
 import { loggedin } from './guards/loggedin.guard';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent,canActivate:[loggedin]},
-  {path:'login',component:AuthenticationComponent,canActivate:[loggedin]} ,
+  {path:'',component:HomeComponent,},
+  {path:'login',component:AuthenticationComponent,} ,
   {path:'register',component:RegisterComponent},
-  {path:'dashboard',component:DashboardComponent,canActivate:[loggedin]},
+  {path:'dashboard',component:DashboardComponent,canActivate:[authenticationGuard]},
   {path:'**',component:AuthenticationComponent},
 ];
 

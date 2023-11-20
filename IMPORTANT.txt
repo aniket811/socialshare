@@ -1,0 +1,2 @@
+Please Note this project is still in development however  it is deployed on firebase 
+with email address : techieaniket811@gmail.com

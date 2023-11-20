@@ -25,6 +25,11 @@
                         
 
                         </span>
+                        <br>
+                        <input type="checkbox" name="rememberMe" [(ngModel)]="isRememberMeChecked" (change)="RememberMe($event)"  value="Remember Me"/>                            
+                        <span>
+                            Remember Me
+                        </span>
                         <div class="text-danger">
                             <span
                             *ngIf="LoginUser.controls['email'].dirty&&LoginUser.controls['email'].errors">
