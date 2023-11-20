@@ -20,10 +20,11 @@ export class DashboardComponent implements OnInit {
   postDatas: PostData[]=[];
   ngOnInit(): void {
 
-    if(this.customAuthService.isUserProfileExists.value==true){
+    // if(this.customAuthService.isUserProfileExists.value==true){
       
-      this.isuserProfileCreated();
-    }
+    //   this.isuserProfileCreated();
+    // }
+    this.isuserProfileCreated();
     this.getPosts();
    
   }

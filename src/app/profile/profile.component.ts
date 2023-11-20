@@ -16,7 +16,7 @@ import { ImageService } from '../services/image.service';
 export class ProfileComponent  implements OnInit{
   @ViewChild('profile') profile:any;
   isProfileExistsClass:boolean|undefined;
-  profileimageUrl="../../assets/No-Instagram-Profile-Pic-removebg-preview.png";
+  profileimageUrl:string="../../assets/No-Instagram-Profile-Pic-removebg-preview.png";
   inputType:string="image";
   constructor(
     private dialog:MatDialog,
@@ -55,21 +55,30 @@ export class ProfileComponent  implements OnInit{
    panelClass:'profile-input',
     });
     this.dialog.afterAllClosed.subscribe((data:any)=>{
-      debugger;
       this.firestore.getDocument({
         path:["profile",this.authService.getAuth().currentUser?.uid!],
         onComplete:(data:any)=>{
           if(data.exists){
-
-            this.profileimageUrl=data._delegate._document.data.value.mapValue.fields.imageUrl.stringValue;
-            return ;
+            //console.log(data._delegate._document.data.value.mapValue.fields.imageUrl);
+             this.profileimageUrl=data._delegate._document.data.value.mapValue.fields.imageUrl.stringValue;
+            this.changeProfileImage(this.profileimageUrl);
+          
           }
         },
         onFail:(err)=> {
           
         },
+        
       })
+      return this.profileimageUrl;
     })  
+  }
+  changeProfileImage(event:any){  
+    debugger;
+    // const reader=new FileReader();
+    // reader.onload=(e)=>{
+      this.profile.nativeElement.src=event;
+
   }
   //If user already has profile image but not profile name then this function will be called
  alreadyProfileImage(){
