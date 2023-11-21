@@ -26,7 +26,7 @@ export class authenticationGuard implements CanActivate {
   ): boolean {
     if (this.authService.isSignedIn()) {
       if (this.authService.isEmailVerified()) {
-        if(state.url=="/login"){
+        if(state.url==="/login"){
           this.router.navigateByUrl('/dashboard');
           return false;
         }

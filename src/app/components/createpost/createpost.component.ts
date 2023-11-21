@@ -93,12 +93,28 @@ export class CreatepostComponent implements OnInit {
       }
   })
   }
+  //Get Profile url of a user for storing in post collection
+  getProfileUrl(){
+  var   profileUrl="";
+    this.firestore.getDocument({
+      path:['profile',this.userId],
+      onComplete:(data:any)=>{
+        
+      },
+      onFail:()=>{
+
+      }
+    })
+  }
   uploadImage(captions: HTMLTextAreaElement) {
     this.dialog.closeAll();
     this.toast.info('Uploading post please wait...')
     // Above code is redundant as we are using firebase storage to store images and firestore to store captions and likes
     let userId: any = this.firebaseauth.getAuth().currentUser?.uid;
     let postId = uuid();
+    if(this.userName="Guest"){
+      this.toast.error("Please Update your profile to post");
+    }
     this.storage.upload({
       uploadName: 'Create a New Post ',
       path: ['Posts', "Image", postId],
@@ -117,21 +133,12 @@ export class CreatepostComponent implements OnInit {
             userName:this.userName,
             captions: captions,
             likes: 0,
-            comments: 0,
-            profileurl:this.firestore.getDocument({
-              path:['profile',this.userId],
-              onComplete:(data:any)=>{
-                return data.profileurl
-              },
-              onFail:()=>{
-                return null;
-              }
-            }) ,           
+            comments: 0,           
             createdAt: FirebaseTSApp.getFirestoreTimestamp(),
           },
           onComplete: () => {
             this.toast.success('Post Uploaded Successfully');
-
+            
          
           },
           onFail: () => {
