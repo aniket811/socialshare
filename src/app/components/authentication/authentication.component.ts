@@ -19,20 +19,16 @@ export class AuthenticationComponent implements OnInit {
   showPasswordInput:string="password";
 
   isRememberMeChecked:boolean=false;
-  // securels=new SecureLS({encodingType:'aes',isCompression:false})/;
   @ViewChild('LoginUser') LoginUser: any;
   constructor(private router: Router, private toast: ToastrService,
     private auths: FirebaseTSAuth, private oauthService: AngularFireAuth,
-    // private googleAuthService:Auth,
     private storage: LocalStorageService,
-
     private authService: AuthServiceService) { }
  
   ngOnInit() {
-    if(sessionStorage.getItem('socialShare')!=null){
+    if(sessionStorage.getItem('socialShare')){
       const socialShareData=JSON.parse(sessionStorage.getItem('socialShare')!);
-      this.LoginUser.controls.email.setValue(socialShareData.email);
-      this.LoginUser.controls.password.setValue(socialShareData.password);
+      
       this.auths.signInWith({
         email: socialShareData.email,
         password: socialShareData.password,
@@ -42,16 +38,13 @@ export class AuthenticationComponent implements OnInit {
             this.authService.isUserLoggedIn.next(true);
             this.toast.success("Logged in successfully", "Success");
             this.router.navigate(['/dashboard']);
-            return;
           }
           this.auths.sendVerificationEmail();
           this.toast.error("Please verify your email address and try login back", "Error");
           this.isLoading = false;
         }        
       })
-    }
-
-    return; 
+    } 
   }
   
  
