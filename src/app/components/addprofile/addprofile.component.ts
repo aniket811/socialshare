@@ -98,8 +98,6 @@ export class AddprofileComponent implements OnInit {
       },
 
     })
-    // Redundant code needs to have discussions on this with  a product team
-  
 
   }
 

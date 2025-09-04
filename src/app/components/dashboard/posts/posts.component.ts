@@ -9,6 +9,7 @@ import { FirebaseTSFirestore, Limit } from 'firebasets/firebasetsFireStore/fireb
 })
 export class PostsComponent implements OnInit {
   @Input() posts!: PostData;
+  @Input() profile:Profile[] =[];
   creatorName: string | undefined;
 
   constructor(private auths: FirebaseTSAuth, private firestore: FirebaseTSFirestore) { }
@@ -23,5 +24,11 @@ export interface PostData {
   createdAt: Date;
   likes: number;
   comments: number;
-  profileImageUrl: string; 
+  profileImageUrl: string;
+  
+}
+export interface Profile {
+  imageUrl:any;
+  //Profile Name 
+  data:any;
 }

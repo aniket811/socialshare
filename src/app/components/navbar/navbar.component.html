@@ -24,28 +24,44 @@
 
     </ul>
 
-    <div *ngIf="isUserLoggedIn" style="color: white;">
+    
 
-      <button mat-button [mat-menu-trigger-for]="profileMenu" >
+   <div *ngIf="isUserLoggedIn" style="color: white;">
+ 
 
+  <button mat-button [mat-menu-trigger-for]="profileMenu">
+          <div *ngIf="profileUrl!==''; else noprofile">
+
+        <img 
+        [src]="profileUrl" 
+        alt="Profile" 
+        width="40" 
+        height="40" 
+        style="cursor: pointer; border-radius: 50%;" 
+        />
+      </div>
+      <ng-template #noprofile>
         <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item  >
-          <mat-icon>account_circle</mat-icon>
-          <span>Profile</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>help</mat-icon>
-          <span>Help</span>
-        </button>
+      </ng-template>
+  </button>
 
-        </mat-menu>
-    </div>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>
+ <mat-icon>account_circle</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>help</mat-icon>
+      <span>Help</span>
+    </button>
+  </mat-menu>
+</div>
+
+
 
   </div>
 

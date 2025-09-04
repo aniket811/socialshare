@@ -106,7 +106,7 @@ export class CreatepostComponent implements OnInit {
       }
     })
   }
-  uploadImage(captions: HTMLTextAreaElement) {
+  uploadPostWithImage(captions: HTMLTextAreaElement) {
     this.dialog.closeAll();
     this.toast.info('Uploading post please wait...')
     // Above code is redundant as we are using firebase storage to store images and firestore to store captions and likes
@@ -114,12 +114,19 @@ export class CreatepostComponent implements OnInit {
     let postId = uuid();
     if(this.userName="Guest"){
       this.toast.error("Please Update your profile to post");
+    } 
+    if(captions===null){
+      this.toast.error("Please Select an image to post.");
+
     }
-    this.storage.upload({
+    this.uploadPostToStorage(postId,userId,captions);
+  }
+  //Upload Post to Storage
+  public uploadPostToStorage(postId:any,userId:string,captions:any, ){
+   this.storage.upload({
       uploadName: 'Create a New Post ',
       path: ['Posts', "Image", postId],
       data: {
-
         data: this.selectedFile,
       },
       onComplete: (data:any) => {
@@ -138,7 +145,6 @@ export class CreatepostComponent implements OnInit {
           },
           onComplete: () => {
             this.toast.success('Post Uploaded Successfully');
-            
          
           },
           onFail: () => {
@@ -146,23 +152,15 @@ export class CreatepostComponent implements OnInit {
           },
         });
       },
-    });
+    })
   }
   uploadPost(Captions: any) {
-    let captions=Captions
-
+    //If No photo is selected.
     if (!this.selectedFile) {
-      if(captions.trim().length == 0 )
-      {
-        this.toast.error("Please Enter some text to post")
-        return; 
-      }
-      else{
-        this.uploadCaptionOnly(Captions);
-        return ; 
-      }
-    }
-    this.uploadImage(Captions);
+      this.toast.error("Please Attach an image for reference.");
+      return ; 
+    } 
+    this.uploadPostWithImage(Captions);
     return;
   }
 

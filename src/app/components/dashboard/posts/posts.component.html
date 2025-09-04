@@ -26,6 +26,9 @@
 
    <mat-card class="example-card">
     <mat-card-header>
+         <div mat-card-avatar>
+            <img [src]="posts.profileImageUrl" alt="Profile Image" style="width: 40px; height: 40px; border-radius: 50%;">
+        </div>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{posts.creatorName}}</mat-card-title>
     </mat-card-header>
